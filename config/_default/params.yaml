@@ -1,5 +1,5 @@
 mainSections:
-  - posts
+  - post
 featuredImageField: image
 rssFullContent: true
 favicon: # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
@@ -13,7 +13,7 @@ dateFormat:
   lastUpdated: Jan 02, 2006 15:04 MST
 
 sidebar:
-  subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  subtitle: pachi pachi pachi pachi
   avatar:
     enabled: true
     local: true
@@ -104,6 +104,7 @@ comments:
   cusdis:
     host:
     id:
+
 widgets:
   homepage:
     - type: search

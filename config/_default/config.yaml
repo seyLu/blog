@@ -21,7 +21,7 @@ DefaultContentLanguage: en
 hasCJKLanguage: false
 
 permalinks:
-  post: /p/:slug/
+  post: /post/:slug/
   page: /:slug/
 
 ### Custom menu
@@ -41,7 +41,7 @@ menu:
       name: Twitch
       url: https://twitch.tv/seyLu_dev
       params:
-        icon: brand-twitch
+        icon: brand-twitter
 
 related:
   includeNewer: true
