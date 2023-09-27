@@ -1,3 +1,5 @@
+exclude: [themes]
+
 formatter:
   type: basic
   retain_line_breaks: true
