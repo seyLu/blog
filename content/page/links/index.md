@@ -11,10 +11,10 @@ links:
     website: https://www.typescriptlang.org
     image: ts-logo-128.jpg
 menu:
-    main:
-        weight: -50
-        params:
-            icon: link
+  main:
+    weight: -50
+    params:
+      icon: link
 
 comments: false
 ---
