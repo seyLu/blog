@@ -20,7 +20,7 @@ toc: true
 chmod [options] file(s)
 ```
 
-### Permission start with letter specifying which users should be affected by change:
+Permission start with letter specifying which users should be affected by change:
 
 ```bash
 u   owner user
