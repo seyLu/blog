@@ -5,11 +5,15 @@ links:
   - title: GitHub
     description: github.com/seyLu
     website: https://github.com/seyLu
-    image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-  - title: TypeScript
-    description: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
-    website: https://www.typescriptlang.org
-    image: ts-logo-128.jpg
+    image:
+  - title: Twitch
+    description: twitch.tv/seyLu_dev
+    website: https://twitch.tv/seyLu_dev
+    image:
+  - title: VODS
+    description: youtube.com/@seyLuVODS
+    website: https://youtube.com/@seyLuVODS
+    image:
 menu:
   main:
     weight: -50

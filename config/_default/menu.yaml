@@ -1,0 +1,29 @@
+### Custom menu
+### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
+### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
+main: []
+
+social:
+  - identifier: github
+    name: GitHub
+    url: https://github.com/seyLu
+    params:
+      icon: brand-github
+
+  - identifier: twitch
+    name: Twitch
+    url: https://twitch.tv/seyLu_dev
+    params:
+      icon: brand-twitch
+
+  - identifier: VODS
+    name: VODS
+    url: https://youtube.com/seyLuVODS
+    params:
+      icon: brand-youtube
+
+  - identifier: discord
+    name: Discord
+    url: https://discord.gg/seyLu
+    params:
+      icon: brand-discord
