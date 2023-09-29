@@ -27,29 +27,24 @@ npm i -D sass
 
 ### Naming Convention: BEM
 
+<!-- prettier-ignore-start -->
 ```html
-<header class="header">
-  <!-- Block -->
-  <div class="header__logo-box">
-    <!-- Element -->
-    <img class="header__logo" ... />
-    <!-- Element -->
+<header class="header">                                       <!-- Block -->
+  <div class="header__logo-box">                              <!-- Element -->
+    <img class="header__logo" ...>                            <!-- Element -->
   </div>
 
-  <div class="header__text-box">
-    <!-- Element -->
-    <h1 class="heading-primary">
-      <!-- Block -->
-      <span class="heading-primary--main">...</span>
-      <!-- Modifier -->
-      <span class="heading-primary--sub">...</span>
-      <!-- Modifier -->
+  <div class="header__text-box">                              <!-- Element -->
+    <h1 class="heading-primary">                              <!-- Block -->
+      <span class="heading-primary--main">...</span>          <!-- Modifier -->
+      <span class="heading-primary--sub">...</span>           <!-- Modifier -->
     </h1>
 
     <a href="#" class="btn btn--white btn--animated">...</a>
   </div>
 </header>
 ```
+<!-- prettier-ignore-end -->
 
 #### `base/_typography.scss`
 
