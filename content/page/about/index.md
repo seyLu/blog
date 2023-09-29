@@ -1,7 +1,7 @@
 ---
 title: About
 description: I tend to forget stuff so I write about it
-date: "2019-02-28"
+date: "2023-09-29"
 aliases:
   - about-us
   - about-hugo
