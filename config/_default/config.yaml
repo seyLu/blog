@@ -22,26 +22,9 @@ hasCJKLanguage: false
 
 permalinks:
   post: /post/:slug/
+  notes: /notes/:slug/
+  projects: /projects/:slug/
   page: /:slug/
-
-### Custom menu
-### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
-### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
-menu:
-  main: []
-
-  social:
-    - identifier: github
-      name: GitHub
-      url: https://github.com/seyLu
-      params:
-        icon: brand-github
-
-    - identifier: twitch
-      name: Twitch
-      url: https://twitch.tv/seyLu_dev
-      params:
-        icon: brand-twitter
 
 related:
   includeNewer: true

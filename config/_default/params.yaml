@@ -1,5 +1,7 @@
 mainSections:
   - post
+  - notes
+  - projects
 featuredImageField: image
 rssFullContent: true
 favicon: dorito.ico # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
@@ -139,7 +141,7 @@ colorScheme:
   toggle: true
 
   # Available values: auto, light, dark
-  default: dark
+  default: auto
 
 imageProcessing:
   cover:
