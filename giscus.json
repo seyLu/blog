@@ -1,0 +1,5 @@
+{
+  "origins": ["https://giscus.app", "https://seylu.pages.dev"],
+  "originsRegex": ["http://localhost:[0-9]+"],
+  "defaultCommentOrder": "newest"
+}
