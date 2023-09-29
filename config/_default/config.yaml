@@ -60,8 +60,8 @@ markup:
       ## Set to true if you have HTML content inside Markdown
       unsafe: true
   tableOfContents:
-    endLevel: 4
-    ordered: true
+    endLevel: 5
+    ordered: false
     startLevel: 2
   highlight:
     noClasses: false

@@ -1,17 +1,10 @@
 ---
 title: Linux Notes
-description: Hugo, the world's fastest framework for building websites
-date: "2023-09-28"
 description: "collection of linux notes"
-categories: [
-    "Notes",
-]
-tags: [
-    "linux",
-    "shell",
-]
+date: "2023-09-28"
+categories: ["Notes"]
+tags: ["linux", "shell"]
 image: Sakurajima_Mai_Linux_Essentials.jpg
-toc: true
 ---
 
 ## chmod
