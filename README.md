@@ -1,3 +1,3 @@
 # blog
 
-hugo blog
+WIP
