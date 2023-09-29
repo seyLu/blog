@@ -1,7 +1,7 @@
 ---
 title: PHP Notes
-description: "collection of PHP notes"
-date: "2023-09-28"
+description: "collection of php notes"
+date: "2023-09-29"
 categories: ["Notes"]
 tags: ["ubuntu", "lamp", "linux", "apache", "mongodb", "php"]
 image: Oreimo_Leon_Atkinson_Core_PHP_Programming.png
