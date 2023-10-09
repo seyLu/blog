@@ -128,17 +128,17 @@ scss
 *,
 *::after,
 *::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
 }
 
 html {
-  font-size: 62.5%; // defines what 1rem is (62.5% of 16px = 10px)
+    font-size: 62.5%; // defines what 1rem is (62.5% of 16px = 10px)
 }
 
 body {
-  box-sizing: border-box; // makes elem dimensions include padding and border
+    box-sizing: border-box; // makes elem dimensions include padding and border
 }
 ```
 
@@ -167,52 +167,53 @@ $gutter-horizontal: 6rem;
 @use "../abstracts" as *;
 
 .row {
-  max-width: $grid-width;
-  margin: 0 auto;
-
-  &:not(:last-child) {
-    margin-bottom: $gutter-vertical;
-  }
-
-  @include clearfix;
-
-  [class^="col-"] {
-    float: left;
+    max-width: $grid-width;
+    margin: 0 auto;
 
     &:not(:last-child) {
-      margin-right: $gutter-horizontal;
+        margin-bottom: $gutter-vertical;
     }
-  }
 
-  .col-1-of-2 {
-    width: calc((100% - #{$gutter-horizontal}) / 2);
-  }
+    @include clearfix;
 
-  .col-1-of-3 {
-    width: calc((100% - #{$gutter-horizontal} * 2) / 3);
-  }
+    [class^="col-"] {
+        float: left;
 
-  .col-1-of-4 {
-    width: calc((100% - #{$gutter-horizontal} * 3) / 4);
-  }
+        &:not(:last-child) {
+            margin-right: $gutter-horizontal;
+        }
+    }
 
-  .col-2-of-3 {
-    width: calc(
-      #{$gutter-horizontal} + 2 * ((100% - #{$gutter-horizontal} * 2) / 3)
-    );
-  }
+    .col-1-of-2 {
+        width: calc((100% - #{$gutter-horizontal}) / 2);
+    }
 
-  .col-2-of-4 {
-    width: calc(
-      #{$gutter-horizontal} + 2 * ((100% - #{$gutter-horizontal} * 3) / 4)
-    );
-  }
+    .col-1-of-3 {
+        width: calc((100% - #{$gutter-horizontal} * 2) / 3);
+    }
 
-  .col-3-of-4 {
-    width: calc(
-      2 * #{$gutter-horizontal} + 3 * ((100% - #{$gutter-horizontal} * 3) / 4)
-    );
-  }
+    .col-1-of-4 {
+        width: calc((100% - #{$gutter-horizontal} * 3) / 4);
+    }
+
+    .col-2-of-3 {
+        width: calc(
+            #{$gutter-horizontal} + 2 * ((100% - #{$gutter-horizontal} * 2) / 3)
+        );
+    }
+
+    .col-2-of-4 {
+        width: calc(
+            #{$gutter-horizontal} + 2 * ((100% - #{$gutter-horizontal} * 3) / 4)
+        );
+    }
+
+    .col-3-of-4 {
+        width: calc(
+            2 * #{$gutter-horizontal} + 3 *
+                ((100% - #{$gutter-horizontal} * 3) / 4)
+        );
+    }
 }
 ```
 
@@ -222,10 +223,10 @@ $gutter-horizontal: 6rem;
 
 ```scss
 @mixin clearfix {
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 ```

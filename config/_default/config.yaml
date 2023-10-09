@@ -23,7 +23,7 @@ hasCJKLanguage: false
 permalinks:
   post: /post/:slug/
   notes: /notes/:slug/
-  projects: /projects/:slug/
+  project: project/:slug/
   page: /:slug/
 
 related:
