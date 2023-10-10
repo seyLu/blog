@@ -120,12 +120,9 @@ We need to somehow call the getProvinces when we need the data:
 From the json response received, dynamically create html content, again, using Alpine.js:
 
 ```html
- <ul ...>
+<ul ...>
     <template x-for="item in provinces">
-        <li @click="
-            provinceName = item.name;
-            provinceCode = item.code;
-            @click.debounce="getCities">
+        <li>
             <a x-text="item.name"></a>
         </li>
     </template>
@@ -135,7 +132,8 @@ From the json response received, dynamically create html content, again, using A
 ### Adding search filter on user input
 
 ```html
- <div x-data="{
+<div
+    x-data="{
         search: '',
 
         get filteredProvinces() {
@@ -144,21 +142,46 @@ From the json response received, dynamically create html content, again, using A
             )
         },
      }"
-     ...>
-    <input x-model="search"
-           id="province_name"
-           name="province_name"
-            ... />
+    ...
+>
+    <input x-model="search" id="province_name" name="province_name" ... />
     <ul ...>
         <template x-for="item in filteredProvinces" :key="item.name">
-            <li @click="
-                provinceName = item.name;
-                provinceCode = item.code;
-                @click.debounce="getCities">
-            <a x-text="item.name"></a>
+            <li>
+                <a x-text="item.name"></a>
             </li>
         </template>
     </ul>
+</div>
+```
+
+### Fetching cities
+
+To fetch cities, added onclick handler on list item and added debounce to minimize calls to server:
+
+```html
+<template x-for="item in filteredProvinces" :key="item.name">
+    <li @click="
+        provinceName = item.name;
+        provinceCode = item.code;
+        @click.debounce="getCities">
+        <a x-text="item.name"></a>
+    </li>
+</template>
+```
+
+Then added `getCities` logic:
+
+```js
+async getCities() {
+    this.cities = await (await fetch(`{% url 'cities-query' %}?province=${this.provinceCode}`, {
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'X-CSRFToken': $store.csrf_token,
+    }, mode: 'same-origin'
+    })).json()
+},
 ```
 
 ### Demo
@@ -166,3 +189,5 @@ From the json response received, dynamically create html content, again, using A
 And the output is something like this:
 
 {{< video src="create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
+
+If you're curious about all the changes made, you can [view the commit hash on this PR](https://github.com/seyLu/medrec/commit/9fd312aef97adaa6a55bd74d4c0383cccedbada8).
