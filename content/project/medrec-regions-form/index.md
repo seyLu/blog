@@ -190,4 +190,74 @@ And the output is something like this:
 
 {{< video src="create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
 
-If you're curious about all the changes made, you can [view the commit hash on this PR](https://github.com/seyLu/medrec/commit/9fd312aef97adaa6a55bd74d4c0383cccedbada8).
+If you're curious about all the changes made using this approach, you can [view the commit hash on this PR](https://github.com/seyLu/medrec/commit/9fd312aef97adaa6a55bd74d4c0383cccedbada8).
+
+## Approach 3: HTMX & Datalist
+
+### Update Django backend to handle HTMX
+
+Check if request comes from htmx or not and respond to client accordingly (htmx expects html):
+
+```py
+class ProvincesQueryView(View):
+    def post(self, request: HttpRequest) -> JsonResponse | HttpResponse:
+        parsed_url = urlparse(request.get_full_path())
+        regions: dict[str, list[str]] = parse_qs(parsed_url.query)
+
+        response: Any = []
+
+        if code := regions.get("code"):
+            code = code[0]  # type: ignore
+            response = Province.objects.get(code=code)
+
+        else:
+            response = Province.objects.all()
+
+        if not request.htmx:
+            if not response:
+                return JsonResponse(list(response), safe=False)
+
+            return JsonResponse(list(response.values()), safe=False)
+
+        if not response:
+            return HttpResponse()
+
+        return render(
+            request,
+            "medrec/partials/regions-form/province-datalist.html",
+            {"provinces": list(response)},
+        )
+```
+
+And added templates to send to client:
+
+```html
+{% for province in provinces %}
+<option value="{{ province.name }}" data-code="{{ province.code }}">
+    {{ province.code }}
+</option>
+{% endfor %}
+```
+
+### HTMX stuff
+
+On datalist element load, request provinces from server and swap the template inside the datalist element:
+
+```html
+<input
+    type="text"
+    id="province_name"
+    name="province_name"
+    list="province_datalist"
+    required
+    placeholder="Leyte"
+    class="input input-bordered w-full"
+/>
+<datalist
+    hx-post="{% url 'provinces-query' %}"
+    hx-trigger="load"
+    hx-target="this"
+    hx-swap="innerHTML"
+    id="province_datalist"
+></datalist>
+```
