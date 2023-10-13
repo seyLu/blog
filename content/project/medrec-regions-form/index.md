@@ -86,13 +86,13 @@ I first worked on province form and handling which cities to query:
 ```html
 <div ...
      x-data="{
-     provinces: [],
+        provinces: [],
 
-     provinceName: null,
-     provinceCode: null,
-     cityName: null,
-     cityCode: null,
-     ...
+        provinceName: null,
+        provinceCode: null,
+        cityName: null,
+        cityCode: null,
+        ...
 ```
 
 ### Initializing provinces using Alpine.js
@@ -261,3 +261,65 @@ On datalist element load, request provinces from server and swap the template in
     id="province_datalist"
 ></datalist>
 ```
+
+### Add datalist option onclick handler
+
+The idea was, once a province option was clicked, it would trigger a request to the server for cities under it. The problem was, datalists don't really support most javascript events that normal html elements do, including onclick.
+
+One way to circumvent this is to add an oninput change handler, then detect if it was a mouse click.
+
+```js
+const provinceName = document.getElementById("province_name");
+const cityName = document.getElementById("city_name");
+const districtName = document.getElementById("district_name");
+
+const province = document.getElementById("province");
+const provinceDatalist = document.getElementById("province_datalist");
+let provinceNameEsrc = null;
+
+provinceName.addEventListener("keydown", (e) => {
+    provinceNameEsrc = e.key ? "input" : "list";
+});
+
+provinceName.addEventListener("input", (e) => {
+    if (provinceNameEsrc === "list") {
+        const val = e.target.value;
+        const province_code = provinceDatalist.querySelector(
+            `option[value="${val}"]`,
+        ).dataset.code;
+
+        province.value = province_code;
+        province.setAttribute(
+            "hx-post",
+            `{% url 'cities-query' %}?province=${province_code}`,
+        );
+        htmx.process(province);
+
+        province.dispatchEvent(new Event("change"));
+        cityName.disabled = false;
+        cityName.value = "";
+    } else {
+        cityName.disabled = true;
+        cityName.value = "";
+        districtName.disabled = true;
+        districtName.value = "";
+    }
+});
+```
+
+I've used `htmx.process(<elem>)` after adding htmx attributes, so that once this elem is swapped, htmx would work as usual.
+
+As for the custom `change` event, I used a hidden input elem to catch that event. This input elem stores `province_code`, and if the `province_code` changes, will trigger a request to the server to give back the cities under this province.
+
+```html
+<input
+    type="hidden"
+    id="province"
+    name="province"
+    hx-trigger="change"
+    hx-target="#city_datalist"
+    hx-swap="innerHTML"
+/>
+```
+
+## Demo
