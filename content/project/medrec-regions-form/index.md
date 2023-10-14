@@ -262,7 +262,7 @@ On datalist element load, request provinces from server and swap the template in
 ></datalist>
 ```
 
-### Add datalist option onclick handler
+### Datalist option onclick handler
 
 The idea was, once a province option was clicked, it would trigger a request to the server for cities under it. The problem was, datalists don't really support most javascript events that normal html elements do, including onclick.
 
@@ -323,3 +323,5 @@ As for the custom `change` event, I used a hidden input elem to catch that event
 ```
 
 ## Demo
+
+{{< video src="create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
