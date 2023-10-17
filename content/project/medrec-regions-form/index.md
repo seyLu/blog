@@ -1,16 +1,17 @@
 ---
 title: "medrec: Regions form"
 description: "Notes on approach to regions form"
-date: "2023-10-09"
+date: "2023-10-17"
 categories: ["Project"]
 tags: ["medrec", "django", "htmx", "alpine.js", "daisyui"]
 image: Chiyo_Mihama_With_Python_Homework.png
-draft: true
 ---
 
-## TLDR:
+## TLDR
 
 You can view the source code in [medrec](https://github.com/seyLu/medrec) repo.
+
+The final changes were made using [Approach 3](#approach-3) and the code changes are on [this PR](https://github.com/seyLu/medrec/pull/17/files).
 
 ## Django stuff
 
@@ -190,7 +191,9 @@ And the output is something like this:
 
 {{< video src="create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
 
-If you're curious about all the changes made using this approach, you can [view the commit hash on this PR](https://github.com/seyLu/medrec/commit/9fd312aef97adaa6a55bd74d4c0383cccedbada8).
+If you're curious about all the changes made using this approach, you can [view this PR](https://github.com/seyLu/medrec/pull/11/files).
+
+<div id="approach-3"></div>
 
 ## Approach 3: HTMX & Datalist
 
@@ -325,3 +328,5 @@ As for the custom `change` event, I used a hidden input elem to catch that event
 ## Demo
 
 {{< video src="create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
+
+You can [view this PR](https://github.com/seyLu/medrec/pull/17/files) to see the full changes made using this approach.
