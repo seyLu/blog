@@ -36,8 +36,8 @@ comments:
   giscus:
     repo: seyLu/blog
     repoID: R_kgDOKY_jRQ
-    category: Announcements
-    categoryID: DIC_kwDOKY_jRc4CZucG
+    category: General
+    categoryID: DIC_kwDOKY_jRc4CZucH
     mapping: pathName
     reactionsEnabled: 1
     emitMetadata: 0
