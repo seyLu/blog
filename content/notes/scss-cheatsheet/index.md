@@ -1,23 +1,21 @@
 ---
-title: SCSS Notes
-description: "collection of scss notes"
+title: SCSS Cheatsheet
+description: "SCSS stuff I learned from Josh W Comeau"
 date: "2023-09-29"
 categories: ["Notes"]
 tags: ["scss"]
 image: Sae_Chabashira_CSS_Definitive_Guide.png
 ---
 
-## SCSS Cheatsheet
+## NPM Package: sass
 
-### NPM Package: sass
-
-#### Installation
+### Installation
 
 ```bash
 npm i -D sass
 ```
 
-#### Package.json script
+### Package.json script
 
 ```json
 "scripts": {
@@ -25,7 +23,7 @@ npm i -D sass
 }
 ```
 
-### Naming Convention: BEM
+## Naming Convention: BEM
 
 <!-- prettier-ignore-start -->
 ```html
@@ -46,7 +44,7 @@ npm i -D sass
 ```
 <!-- prettier-ignore-end -->
 
-#### `base/_typography.scss`
+### `base/_typography.scss`
 
 ```scss
 .heading-primary {
@@ -64,7 +62,7 @@ npm i -D sass
 }
 ```
 
-### Architecture: 7-1 pattern
+## Architecture: 7-1 pattern
 
 ```bash
 scss
@@ -98,7 +96,7 @@ scss
  |-- vendors                     // external libraries/frameworks - bootstrap, etc.
 ```
 
-#### `main.min.scss`
+### `main.min.scss`
 
 ```scss
 @use "abstracts";
@@ -110,9 +108,9 @@ scss
 @use "vendors"; // if exists
 ```
 
-#### Forwarding partials
+### Forwarding partials
 
-##### `abstracts/_index.scss`
+#### `abstracts/_index.scss`
 
 ```scss
 @forward "functions";
@@ -120,9 +118,9 @@ scss
 @forward "variables";
 ```
 
-### Styles reset/normalize
+## Styles reset/normalize
 
-#### `base/_base.scss`
+### `base/_base.scss`
 
 ```scss
 *,
@@ -142,7 +140,7 @@ body {
 }
 ```
 
-#### `abstracts/_variables.scss`
+### `abstracts/_variables.scss`
 
 ```scss
 // COLOR
@@ -159,9 +157,9 @@ $gutter-vertical: 8rem;
 $gutter-horizontal: 6rem;
 ```
 
-### Grid: float
+## Grid: float
 
-#### layout/\_grid.scss
+### layout/\_grid.scss
 
 ```scss
 @use "../abstracts" as *;
@@ -217,9 +215,9 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-#### Clearfix hack
+### Clearfix hack
 
-##### `abstracts/_clearfix.scss`
+#### `abstracts/_clearfix.scss`
 
 ```scss
 @mixin clearfix {

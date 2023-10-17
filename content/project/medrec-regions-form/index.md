@@ -325,7 +325,7 @@ As for the custom `change` event, I used a hidden input elem to catch that event
 />
 ```
 
-## Demo
+### Demo
 
 {{< video src="create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
 

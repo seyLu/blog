@@ -1,13 +1,11 @@
 ---
-title: Linux Notes
-description: "collection of linux notes"
+title: chmod
+description: "Notes on chmod command"
 date: "2023-09-28"
 categories: ["Notes"]
 tags: ["linux", "shell"]
 image: Sakurajima_Mai_Linux_Essentials.jpg
 ---
-
-## chmod
 
 ```bash
 chmod [options] file(s)
