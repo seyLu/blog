@@ -74,17 +74,29 @@
 
 .article-content .chroma .lntable > tbody > tr > td:last-child > pre {
   padding-bottom: calc(var(--card-padding) / 2);
-
-  code {
-    color: var(--code-text-color);
-  }
 }
 
 .highlight {
   padding-bottom: calc(var(--card-padding) / 2) !important;
 }
 
+@function native-grayscale($grayscale) {
+  @return #{'grayscale(#{$grayscale})'};
+}
+
+@function native-opacity($opacity) {
+  @return #{'opacity(#{$opacity})'};
+}
+
 [data-scheme='dark'] {
+  img,
+  video {
+    --image-grayscale: 20%;
+    --image-opacity: 90%;
+    filter: native-grayscale(var(--image-grayscale))
+      native-opacity(var(--image-opacity));
+  }
+
   .widget-archive--list,
   .search-form,
   .tagCloud-tags a,
