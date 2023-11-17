@@ -288,13 +288,13 @@ provinceName.addEventListener("input", (e) => {
     if (provinceNameEsrc === "list") {
         const val = e.target.value;
         const province_code = provinceDatalist.querySelector(
-            `option[value="${val}"]`,
+            `option[value="${val}"]`
         ).dataset.code;
 
         province.value = province_code;
         province.setAttribute(
             "hx-post",
-            `{% url 'cities-query' %}?province=${province_code}`,
+            `{% url 'cities-query' %}?province=${province_code}`
         );
         htmx.process(province);
 

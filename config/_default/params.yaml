@@ -41,6 +41,7 @@ comments:
     mapping: pathName
     reactionsEnabled: 1
     emitMetadata: 0
+    darkTheme: transparent_dark
 
 widgets:
   homepage:
@@ -76,7 +77,7 @@ colorScheme:
   toggle: true
 
   # Available values: auto, light, dark
-  default: auto
+  default: dark
 
 imageProcessing:
   cover:

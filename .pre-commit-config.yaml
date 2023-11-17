@@ -10,6 +10,6 @@ repos:
     rev: v3.0.3
     hooks:
       - id: prettier
-        types_or: [yaml, markdown, html]
+        types_or: [yaml, markdown, html, css, scss]
         additional_dependencies:
           - prettier@3.0.3

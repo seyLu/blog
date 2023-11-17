@@ -1,0 +1,129 @@
+@mixin font($font-family, $font-file) {
+  @font-face {
+    font-family: $font-family;
+    src:
+      local(''),
+      url($font-file + '.otf') format('otf'),
+      url($font-file + '.woff2') format('woff2'),
+      url($font-file + '.ttf') format('truetype');
+    font-dispay: swap;
+  }
+}
+
+@include font('Geist', '/fonts/geist/GeistVariableVF');
+@include font('Geist Mono', '/fonts/geist/GeistVariable');
+@include font('JetBrains Mono', '/fonts/jetbrains_mono/JetBrainsMono[wght]');
+
+:root {
+  --sys-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Droid Sans',
+    'Helvetica Neue';
+  --zh-font-family: 'PingFang SC', 'Hiragino Sans GB', 'Droid Sans Fallback',
+    'Microsoft YaHei';
+
+  --base-font-family: 'Geist', 'Lato', var(--sys-font-family),
+    var(--zh-font-family), sans-serif;
+  --code-font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, 'Courier New',
+    var(--zh-font-family), monospace;
+
+  --border-radius: 0.4rem;
+
+  --card-border-radius: var(--border-radius);
+  --tag-border-radius: var(--border-radius);
+
+  &[data-scheme='dark'] {
+    --body-background: #000;
+    --accent-color: #fafafa;
+    --accent-color-darker: #eaeaea;
+    --accent-color-text: #444;
+    --body-text-color: #999;
+    --scrollbar-thumb: var(--body-text-color);
+    --scrollbar-track: var(--body-background);
+
+    --card-background: #000;
+    --card-background-selected: rgba(255, 255, 255, 0.16);
+    --card-text-color-main: rgba(255, 255, 255, 0.8);
+    --card-text-color-secondary: rgba(255, 255, 255, 0.7);
+    --card-text-color-tertiary: rgba(255, 255, 255, 0.5);
+    --card-separator-color: rgba(255, 255, 255, 0.12);
+
+    --code-background-color: #272822;
+    --code-text-color: rgba(255, 255, 255, 0.9);
+
+    --table-border-color: #717171;
+    --tr-even-background-color: #545454;
+
+    --blockquote-background-color: #111;
+
+    --pre-text-color: #f8f8f2;
+    --pre-background-color: #272822;
+
+    $color: #f8f8f2;
+    $background-color: #272822;
+    $error-color: #bb0064;
+    $keyword-color: #66d9ef;
+    $text-color: $color;
+    $name-color: #a6e22e;
+    $literal-color: #e6db74;
+  }
+}
+
+.article-content .chroma .lntable > tbody > tr > td:last-child > pre,
+.chroma .lntable > tbody > tr > td:last-child {
+  scrollbar-width: thin !important;
+}
+
+.article-content .chroma .lntable > tbody > tr > td:last-child > pre {
+  padding-bottom: calc(var(--card-padding) / 2);
+}
+
+.highlight {
+  padding-bottom: calc(var(--card-padding) / 2) !important;
+}
+
+[data-scheme='dark'] {
+  .search-form,
+  .tagCloud-tags a,
+  article {
+    border: 1px solid #333;
+    border-radius: var(--border-radius);
+  }
+
+  .highlight,
+  .chroma {
+    background: #111;
+  }
+
+  #TableOfContents {
+    background-color: #000;
+
+    & > ul {
+      padding-right: 0 !important;
+    }
+
+    li {
+      padding: 0.2rem 0rem 0.2rem 5px !important;
+
+      &.active-class {
+        & > a {
+          color: #fff !important;
+          background-color: #111;
+          border-color: #444 !important;
+        }
+
+        a {
+          --border-radius: 1000rem;
+          border-top-right-radius: var(--border-radius);
+          border-bottom-right-radius: var(--border-radius);
+          font-weight: 400 !important;
+        }
+      }
+
+      a {
+        --padding: 0.5rem !important;
+        padding-top: var(--padding);
+        padding-bottom: var(--padding);
+        color: #999 !important;
+      }
+    }
+  }
+}
