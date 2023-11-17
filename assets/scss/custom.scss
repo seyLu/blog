@@ -118,25 +118,21 @@
     }
 
     li {
-      padding: 0.2rem 0rem 0.2rem 5px !important;
+      padding-right: 0rem !important;
 
       &.active-class {
         & > a {
+          font-weight: 600 !important;
           color: #fff !important;
-          background-color: #111;
-          border-color: #444 !important;
+          border: none !important;
         }
 
         a {
-          --border-radius: 1000rem;
-          border-top-right-radius: var(--border-radius);
-          border-bottom-right-radius: var(--border-radius);
-          font-weight: 400 !important;
+          font-weight: 400;
         }
       }
 
       a {
-        --padding: 0.5rem !important;
         padding-top: var(--padding);
         padding-bottom: var(--padding);
         color: #999 !important;
