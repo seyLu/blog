@@ -41,6 +41,7 @@ comments:
     mapping: pathName
     reactionsEnabled: 1
     emitMetadata: 0
+    lightTheme: light
     darkTheme: transparent_dark
 
 widgets:
