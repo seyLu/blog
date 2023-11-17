@@ -47,7 +47,7 @@
     --card-separator-color: rgba(255, 255, 255, 0.12);
 
     --code-background-color: #272822;
-    --code-text-color: rgba(255, 255, 255, 0.9);
+    --code-text-color: #999;
 
     --table-border-color: #717171;
     --tr-even-background-color: #545454;
@@ -74,6 +74,10 @@
 
 .article-content .chroma .lntable > tbody > tr > td:last-child > pre {
   padding-bottom: calc(var(--card-padding) / 2);
+
+  code {
+    color: var(--code-text-color);
+  }
 }
 
 .highlight {
