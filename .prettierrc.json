@@ -22,7 +22,7 @@
       "options": {
         "parser": "go-template",
         "goTemplateBracketSpacing": true,
-        "bracketSameLine": true
+        "bracketSameLine": false
       }
     }
   ]
