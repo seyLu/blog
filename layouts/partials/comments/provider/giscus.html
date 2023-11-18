@@ -15,37 +15,37 @@
     crossorigin="anonymous"
     async
   ></script>
-<script>
-  function setGiscusTheme(theme) {
-    let giscus = document.querySelector('iframe.giscus-frame');
-    if (giscus) {
-      giscus.contentWindow.postMessage(
-        {
-          giscus: {
-            setConfig: {
-              theme: theme,
+  <script>
+    function setGiscusTheme(theme) {
+      let giscus = document.querySelector('iframe.giscus-frame');
+      if (giscus) {
+        giscus.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: theme,
+              },
             },
           },
-        },
-        'https://giscus.app'
-      );
-    }
-  }
-
-  (function () {
-    addEventListener('message', (e) => {
-      if (event.origin !== 'https://giscus.app') return;
-      handler();
-    });
-    window.addEventListener('onColorSchemeChange', handler);
-
-    function handler() {
-      if (document.documentElement.dataset.scheme === 'light') {
-        setGiscusTheme('{{- default "light" .lightTheme -}}');
-      } else {
-        setGiscusTheme('{{- default "dark_dimmed" .darkTheme -}}');
+          'https://giscus.app'
+        );
       }
     }
-  })();
-</script>
+
+    (function () {
+      addEventListener('message', (e) => {
+        if (event.origin !== 'https://giscus.app') return;
+        handler();
+      });
+      window.addEventListener('onColorSchemeChange', handler);
+
+      function handler() {
+        if (document.documentElement.dataset.scheme === 'light') {
+          setGiscusTheme('{{- default "light" .lightTheme -}}');
+        } else {
+          setGiscusTheme('{{- default "dark_dimmed" .darkTheme -}}');
+        }
+      }
+    })();
+  </script>
 {{- end -}}
