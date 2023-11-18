@@ -121,10 +121,18 @@
       padding-right: 0rem !important;
 
       &.active-class {
+        &::marker,
         & > a {
-          font-weight: 600 !important;
           color: #fff !important;
+        }
+
+        &::marker {
+          font-size: 2.25rem;
+        }
+
+        & > a {
           border: none !important;
+          font-weight: 600 !important;
         }
 
         a {
