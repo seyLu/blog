@@ -11,8 +11,7 @@
 }
 
 @include font('Geist', '/fonts/geist/GeistVariableVF');
-@include font('Geist Mono', '/fonts/geist/GeistVariable');
-@include font('JetBrains Mono', '/fonts/jetbrains_mono/JetBrainsMono[wght]');
+@include font('JetBrains Mono', '/fonts/jetbrains_mono/JetBrainsMono');
 
 :root {
   --sys-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Droid Sans',
@@ -89,6 +88,16 @@
 }
 
 [data-scheme='dark'] {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #000;
+  }
+
   img,
   video {
     --image-grayscale: 20%;
@@ -125,25 +134,33 @@
         & > a {
           color: #fff !important;
         }
-
-        &::marker {
-          font-size: 2.25rem;
-        }
-
-        & > a {
-          border: none !important;
-          font-weight: 600 !important;
-        }
-
-        a {
-          font-weight: 400;
-        }
       }
 
       a {
         padding-top: var(--padding);
         padding-bottom: var(--padding);
         color: #999 !important;
+      }
+    }
+  }
+}
+
+#TableOfContents {
+  li {
+    padding-right: 0rem !important;
+
+    &.active-class {
+      &::marker {
+        font-size: 2.25rem;
+      }
+
+      & > a {
+        border: none !important;
+        font-weight: 600 !important;
+      }
+
+      a {
+        font-weight: 400;
       }
     }
   }

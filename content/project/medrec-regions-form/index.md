@@ -189,7 +189,7 @@ async getCities() {
 
 And the output is something like this:
 
-{{< video src="create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
+{{< video src="/project/medrec-regions-form/create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
 
 If you're curious about all the changes made using this approach, you can [view this PR](https://github.com/seyLu/medrec/pull/11/files).
 
@@ -327,6 +327,6 @@ As for the custom `change` event, I used a hidden input elem to catch that event
 
 ### Demo
 
-{{< video src="create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
+{{< video src="/project/medrec-regions-form/create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
 
 You can [view this PR](https://github.com/seyLu/medrec/pull/17/files) to see the full changes made using this approach.
