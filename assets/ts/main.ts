@@ -118,10 +118,11 @@ window.addEventListener('load', () => {
 window.addEventListener('htmx:afterSwap', () => {
     setTimeout(() => {
         console.clear();
+        window.scrollTo(0, 0);
         Stack.init();
         window.Stack = Stack;
         window.createElement = createElement;
-    }, 100);
+    }, 0);
 });
 
 declare global {

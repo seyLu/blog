@@ -332,7 +332,7 @@ window.addEventListener('load', () => {
 window.addEventListener('htmx:afterSwap', () => {
     setTimeout(() => {
         StackSearch.init();
-    }, 100);
+    }, 0);
 })
 
 export default { Search };
