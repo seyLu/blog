@@ -10,10 +10,7 @@ repos:
     rev: v3.1.0
     hooks:
       - id: prettier
-        types_or: [yaml, markdown, css, scss, javascript, ts]
-
-  - repo: https://github.com/rtts/djhtml
-    rev: '3.0.6'
-    hooks:
-      - id: djhtml
-        entry: djhtml --tabwidth 2
+        types_or: [yaml, markdown, html, css, scss, javascript, ts]
+        additional_dependencies:
+          - prettier@2.8.8
+          - prettier-plugin-go-template@0.0.13
