@@ -386,6 +386,12 @@ declare global {
     }
 }
 
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        StackSearch.init();
+    }, 0);
+});
+
 window.addEventListener('htmx:afterSwap', () => {
     setTimeout(() => {
         StackSearch.init();
