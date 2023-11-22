@@ -253,6 +253,8 @@ class Search {
                 this.list.append(Search.render(item));
             }
 
+            htmx.process(this.list);
+
             const endTime = performance.now();
 
             this.resultTitle.innerText = this.generateResultTitle(
@@ -357,7 +359,7 @@ class Search {
 
     public static render(item: pageData) {
         return (
-            <article>
+            <article hx-boost="true">
                 <a href={item.permalink}>
                     <div class="article-details">
                         <h2
