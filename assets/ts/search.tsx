@@ -275,9 +275,7 @@ class Search {
 
             if (jsonURL) {
                 this.data = await fetch(jsonURL)
-                    .then((res) => {
-                        if (res.ok) return res.json();
-                    })
+                    .then((res) => res.json())
                     .catch((err) => console.error(err));
 
                 const parser = new DOMParser();
