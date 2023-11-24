@@ -1,7 +1,12 @@
 {{- $scope := default "homepage" .Scope -}}
 {{- $context := .Context -}}
 {{- with (index .Context.Site.Params.widgets $scope) -}}
-  <aside hx-indicator="#right" id="right" class="sidebar right-sidebar sticky">
+  <aside
+    hx-swap="morph:innerHTML swap:10ms settle:200ms"
+    hx-indicator="#right"
+    id="right"
+    class="sidebar right-sidebar sticky"
+  >
     {{ range $widget := . }}
       {{ if templates.Exists (printf "partials/widget/%s.html" .type) }}
         {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" .params) }}
