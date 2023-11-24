@@ -9,9 +9,9 @@
   </head>
   <body class="fade" hx-ext="morph">
     <div
-      id="root"
       hx-boost="true"
       hx-swap="morph:innerHTML"
+      hx-indicator="#root"
       class="{{ block `body-class` . }}{{ end }}"
     >
       {{- partial "head/colorScheme" . -}}
@@ -34,7 +34,12 @@
           {{ partial "sidebar/left.html" . }}
         {{- end -}}
         {{- block "right-sidebar" . -}}{{ end }}
-        <main class="main full-width">
+        <main
+          hx-swap="morph:innerHTML swap:10ms settle:200ms"
+          hx-indicator="#main"
+          id="main"
+          class="main full-width"
+        >
           {{- block "main" . }}{{- end }}
         </main>
       </div>

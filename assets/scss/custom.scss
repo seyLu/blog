@@ -163,3 +163,20 @@
     }
   }
 }
+
+.htmx-request #right,
+.htmx-request #main {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.htmx-swapping #right,
+.htmx-swapping #main {
+  opacity: 0;
+}
+
+.htmx-settling #right,
+.htmx-settling #main {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
