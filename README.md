@@ -18,7 +18,8 @@
 
 <br>
 
-#### Latest Posts
+![Blog Site Preview - 1](preview-1.png)
 
-<!-- BLOG-POST-LIST:START -->
-<!-- BLOG-POST-LIST:END -->
+<br>
+
+![Blog Site Preview - 2](preview-2.png)
