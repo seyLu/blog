@@ -1,5 +1,5 @@
 <div align="center">
-    <img height=100 src="https://github.com/seyLu/blog/blob/main/img/assets/seyLu.png" alt="Blog Icon">
+    <img height=100 src="https://github.com/seyLu/blog/blob/main/assets/img/seyLu.png" alt="Blog Icon">
     <h1>Blog</h1>
     <p>I tend to forget stuff so I write about it.</p>
     <p>
