@@ -21,7 +21,6 @@ DefaultContentLanguage: en
 hasCJKLanguage: false
 
 permalinks:
-  post: /post/:slug/
   notes: /notes/:slug/
   project: project/:slug/
   page: /:slug/

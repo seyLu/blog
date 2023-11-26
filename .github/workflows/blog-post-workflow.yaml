@@ -1,0 +1,19 @@
+name: Latest blog post workflow
+on:
+  schedule:
+    - cron: '0 0 * 1-12 *' # At 00:00 in every month from January through December
+  workflow_dispatch:
+permissions:
+  contents: write
+
+jobs:
+  update-readme-with-blog:
+    name: Update this repo's README with latest blog posts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Pull in seylu.pages.dev posts
+        uses: gautamkrishnar/blog-post-workflow@03c1b286bacb690f6d2e9c8ab5a9df44200ce24c # 1.8.4
+        with:
+          feed_list: 'https://seylu.pages.dev/notes/index.xml,https://seylu.pages.dev/project/index.xml'
