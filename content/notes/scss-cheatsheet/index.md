@@ -4,7 +4,7 @@ description: "SCSS stuff I learned from Josh W Comeau"
 date: "2023-09-29"
 categories: ["Notes"]
 tags: ["scss"]
-image: Sae_Chabashira_CSS_Definitive_Guide.png
+image: Shima_Rin_Beginning_CSS.jpg
 ---
 
 ## NPM Package: sass
