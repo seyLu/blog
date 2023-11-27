@@ -18,4 +18,4 @@
 
 <br>
 
-![Blog Site Preview](preview.png)
+<a href="https://seylu.pages.dev/"><img src="https://github.com/seyLu/blog/blob/main/preview.png" alt="Blog Site Preview"></a>
