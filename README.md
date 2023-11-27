@@ -18,8 +18,4 @@
 
 <br>
 
-![Blog Site Preview - 1](preview-1.png)
-
-<br>
-
-![Blog Site Preview - 2](preview-2.png)
+![Blog Site Preview](preview.png)
