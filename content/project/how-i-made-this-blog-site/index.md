@@ -155,6 +155,8 @@ gh api graphql -f query='
 
 ## Spicing Things up
 
+After a bit of configuration, now it's time to make the blog mine.
+
 ### Custom Font
 
 I really wanted to try out the new [Geist font by Vercel](https://vercel.com/font). It was just released a couple weeks ago as of me writing this blog, and I've heard it's very similar to [Inter font](https://fonts.google.com/specimen/Inter) but better.
@@ -228,7 +230,7 @@ Since I've used Geist font, might as well fully commit and follow the [color sch
 
 And to match the Vercel Theme, I replaced the box-shadow with outline and reduced the border-radius. I also went and changed the styles of TOC. ([view source code](https://github.com/seyLu/blog/blob/main/assets/scss/custom.scss))
 
-As for the horizontal scroll bar in code blocks, I found the default to be awfully close to the code so I went and moved it a bit down:
+As for the horizontal scroll bar in code blocks, I found the default to be awfully close to the code so I went and moved it down a bit:
 
 <!-- prettier-ignore-start -->
 ```scss
@@ -301,18 +303,47 @@ and change `data-theme` to default to dark mode:
 
 ## The SPA experience
 
-By this point, I already tried HTMX on two other ongoing projects. I've had the HTMX experience and I genuinely enjoyed using it, so I figured, why not.
+By this point, I've already tried HTMX on two other ongoing projects. I've had the HTMX experience and genuinely enjoyed using it, so I figured, why not.
 
-Plop in htmx.min.js as a js dep:
+Though, I did faced some issues with boosted elements and swapping. I had to use the HTMX extension, [idiomorph](https://github.com/bigskysoftware/idiomorph), and everything somehow worked as expected.
+
+Plop in htmx and idiomorph as a js dep:
 
 ```bash
 static
  |- js
      |- htmx.min.js
+     |- idiomorph-ext.min.js
 ```
 
 And no need to defer, just plug it in:
 
 ```html
 <script src="/js/htmx.min.js"></script>
+<script src="/js/idiomorph-ext.min.js"></script>
 ```
+
+### The Power of Boosting
+
+Boosting should be nerfed, it's too good. The way it works is that, normal elements get the superpower to do ajax calls (links, forms, etc.). And boosting is inherited, meaning if the parent element is boosted, all the children elements also gets boosted.
+
+To take advantage of this behaviour, copy the base layout from theme to root:
+
+<!-- prettier-ignore-start -->
+```html
+layouts
+ |- _default
+     |- baseof.html
+```
+<!-- prettier-ignore-end -->
+
+And turning a `Hugo-generated static site` into a `SPA-like experience` is as simple as:
+
+<!-- prettier-ignore-start -->
+```html
+<body hx-ext="morph">
+  <div
+    hx-boost="true"
+    hx-swap="morph:innerHTML"
+```
+<!-- prettier-ignore-end -->

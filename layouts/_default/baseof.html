@@ -7,11 +7,10 @@
     {{- partial "head/head.html" . -}}
     {{- block "head" . -}}{{- end -}}
   </head>
-  <body class="fade" hx-ext="morph">
+  <body hx-ext="morph">
     <div
       hx-boost="true"
       hx-swap="morph:innerHTML"
-      hx-indicator="#root"
       class="{{ block `body-class` . }}{{ end }}"
     >
       {{- partial "head/colorScheme" . -}}
