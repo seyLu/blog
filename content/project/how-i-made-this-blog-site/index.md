@@ -86,6 +86,27 @@ then configure at `params.yaml`:
 favicon: /favicon.ico
 ```
 
+Add in a `custom.html`:
+
+```bash
+layouts
+ |- partials
+     |- head
+         |- custom.html
+```
+
+and throw in the generated html stuff there:
+
+```html
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+<meta name="msapplication-TileColor" content="#ffc40d" />
+<meta name="theme-color" content="#ff0000" />
+```
+
 ### Github Comments
 
 For comments, I went with [giscus](https://giscus.app/), which uses Github discussions to store comments.
@@ -202,3 +223,96 @@ then copy the the part where the font is loaded in the theme and configure the c
 ### Vercel Theme
 
 Since I've used Geist font, might as well fully commit and follow the [color scheme of Vercel](https://vercel.com/design/color).
+
+### Style Tweaks
+
+And to match the Vercel Theme, I replaced the box-shadow with outline and reduced the border-radius. I also went and changed the styles of TOC. ([view source code](https://github.com/seyLu/blog/blob/main/assets/scss/custom.scss))
+
+As for the horizontal scroll bar in code blocks, I found the default to be awfully close to the code so I went and moved it a bit down:
+
+<!-- prettier-ignore-start -->
+```scss
+.article-content .chroma .lntable > tbody > tr > td:last-child > pre {
+  padding-bottom: calc(var(--card-padding) / 2);
+}
+
+.highlight {
+  padding-bottom: calc(var(--card-padding) / 2) !important;
+}
+```
+<!-- prettier-ignore-end -->
+
+Another subtle change I've made, is the grayscale effect on images and videos on darkmode:
+
+<!-- prettier-ignore-start -->
+```scss
+@function native-grayscale($grayscale) {
+  @return #{'grayscale(#{$grayscale})'};
+}
+
+@function native-opacity($opacity) {
+  @return #{'opacity(#{$opacity})'};
+}
+
+[data-scheme='dark'] {
+  img,
+  video {
+    --image-grayscale: 20%;
+    --image-opacity: 90%;
+    filter: native-grayscale(var(--image-grayscale))
+      native-opacity(var(--image-opacity));
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+This was more work than necessary, simply for the fact that grayscale & opacity in scss is different from css. Thus, requiring this workaround to tell scss to use the native css functions.
+
+With the default theme being dark mode:
+
+<!-- prettier-ignore-start -->
+```yaml
+colorScheme:
+  toggle: true
+  default: dark
+```
+<!-- prettier-ignore-end -->
+
+I also had to configure giscus to default to dark mode. To do this, just copy `giscus.html` from theme to the root dir:
+
+```bash
+layouts
+ |- partials
+     |- comments
+         |- providers
+             |- giscus.html
+```
+
+and change `data-theme` to default to dark mode:
+
+<!-- prettier-ignore-start -->
+```html
+{{- with .Site.Params.comments.giscus -}}
+  <script
+    ...
+    data-theme="{{- default `dark` .darkTheme -}}"
+```
+<!-- prettier-ignore-end -->
+
+## The SPA experience
+
+By this point, I already tried HTMX on two other ongoing projects. I've had the HTMX experience and I genuinely enjoyed using it, so I figured, why not.
+
+Plop in htmx.min.js as a js dep:
+
+```bash
+static
+ |- js
+     |- htmx.min.js
+```
+
+And no need to defer, just plug it in:
+
+```html
+<script src="/js/htmx.min.js"></script>
+```
