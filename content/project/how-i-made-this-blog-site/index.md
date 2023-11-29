@@ -1,11 +1,10 @@
 ---
 title: "How I made this blog site"
 description: "title"
-date: "2023-11-27"
+date: "2023-11-29"
 categories: ["Project"]
 tags: ["blog", "hugo", "htmx", "typescript", "scss"]
 image: Kitagawa_Marin_Holding_Nature_of_Code.png
-draft: true
 ---
 
 Source code can be found in [blog](https://github.com/seyLu/blog) repo.
@@ -268,7 +267,7 @@ Another subtle change I've made, is the grayscale effect on images and videos on
 ```
 <!-- prettier-ignore-end -->
 
-This was more work than necessary, simply for the fact that grayscale & opacity in scss is different from css. Thus, requiring this workaround to tell scss to use the native css functions.
+This was more work than necessary, simply for the fact that grayscale & opacity in scss is different from css. Thus, requiring this workaround to tell scss to use the native css functions instead.
 
 With the default theme being dark mode:
 
@@ -468,6 +467,30 @@ window.addEventListener('htmx:afterSwap', () => {
 ```
 <!-- prettier-ignore-end -->
 
+We want the dynamically created element to be boosted. But on every time that this element is recreated (on page load & HTMX swap), it loses its HTMX properties. So we'll have to reapply that:
+
+<!-- prettier-ignore-start -->
+```diff
+ private async doSearch(keywords: string[]) {
+    const startTime = performance.now();
+    const results = await this.searchKeywords(keywords);
+    this.clear();
+
+    if (results) {
+        for (const item of results) {
+            this.list.append(Search.render(item));
+        }
+
++       htmx.process(this.list);
+
+...
+
+public static render(item: pageData) {
+    return (
++       <article hx-boost="true">
+```
+<!-- prettier-ignore-end -->
+
 By this point, if you go to the console tab, there will be a lot of errors. The search component expects that you're already using the search feature -- even though, what we want to do is to load the script, that's it.
 
 To silence these errors, we just need to wrap a couple statements, to execute if the data they're expecting exists:
@@ -504,7 +527,7 @@ Boosting reloads the whole page, which we don't really want, especially if we ad
 
 Thankfully, this is possible in HTMX via [hx-indicator](https://htmx.org/attributes/hx-indicator/) attribute. For example, the left sidebar doesn't really change but the main content and the right sidebar does change.
 
-When HTMX is doing its magic, it adds [classes depending on the operation its currently doing](https://htmx.org/docs/#request-operations). And we can take advantage of this and apply css transitions:
+When HTMX is doing its magic, it adds [classes depending on the operation it's currently doing](https://htmx.org/docs/#request-operations). And we can take advantage of this and apply css transitions:
 
 <!-- prettier-ignore-start -->
 ```scss
@@ -526,3 +549,75 @@ When HTMX is doing its magic, it adds [classes depending on the operation its cu
 }
 ```
 <!-- prettier-ignore-end -->
+
+As you've noticed, we're targetting the right sidebar and the main content.
+
+Now we just need to add the HTMX attributes for the main content:
+
+```bash
+layouts
+ |- _default
+     |- baseof.html
+
+```
+
+<br>
+
+<!-- prettier-ignore-start -->
+```html
+<main
+  hx-swap="morph:innerHTML swap:10ms settle:200ms"
+  hx-indicator="#main"
+  id="main"
+```
+<!-- prettier-ignore-end -->
+
+We're adding a bit of delay on swap events, just enough time for the page animtation transition to kick in.
+
+Similarly, do the same thing to the right sidebar (copied from theme):
+
+```bash
+layouts
+ |- partials
+     |- sidebar
+         |- right.html
+```
+
+<br>
+
+<!-- prettier-ignore-start -->
+```html
+<aside
+  hx-swap="morph:innerHTML swap:10ms settle:200ms"
+  hx-indicator="#right"
+  id="right"
+```
+<!-- prettier-ignore-end -->
+
+There's also the left sidebar, which contains the menu used for the main navigation. If we leave it as is, every link clicked, the whole page will reload. So we also have to address that:
+
+```bash
+layouts
+ |- partials
+     |- sidebar
+         |- left.html
+```
+
+<br>
+
+<!-- prettier-ignore-start -->
+```html
+<ol
+  hx-swap="morph:innerHTML swap:10ms settle:200ms"
+  hx-indicator="#main"
+  ...
+>
+  ...
+  <li id="dark-mode-toggle" hx-disable>...</li>
+</ol>
+```
+<!-- prettier-ignore-end -->
+
+And for elements where it doesn't make sense to be boosted, like the dark mode toggle element, we just add an `hx-disable` attribute.
+
+Hmmm. I think that's about it. I mean, if I forgot something, feel free to [raise an issue](https://github.com/seyLu/blog/issues), [start a discussion](https://github.com/seyLu/blog/discussions), or comment down below. GTG I need to sleep.
