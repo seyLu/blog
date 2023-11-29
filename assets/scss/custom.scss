@@ -164,6 +164,11 @@
   }
 }
 
+.article-content .copyCodeButton {
+  top: calc(var(--card-padding) / 1.17);
+  right: calc(var(--card-padding) / 1.17);
+}
+
 .htmx-request #right,
 .htmx-request #main {
   opacity: 0;
