@@ -167,6 +167,7 @@
 .article-content .copyCodeButton {
   top: calc(var(--card-padding) / 1.17);
   right: calc(var(--card-padding) / 1.17);
+  box-shadow: none;
 }
 
 .htmx-request #right,
