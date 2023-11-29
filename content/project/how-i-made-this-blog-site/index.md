@@ -301,7 +301,7 @@ and change `data-theme` to default to dark mode:
 ```
 <!-- prettier-ignore-end -->
 
-## The SPA experience
+## The SPA Experience
 
 By this point, I've already tried HTMX on two other ongoing projects. I've had the HTMX experience and genuinely enjoyed using it, so I figured, why not.
 
@@ -323,9 +323,9 @@ And no need to defer, just plug it in:
 <script src="/js/idiomorph-ext.min.js"></script>
 ```
 
-### The Power of Boosting
+### Boosting Should Be Nerfed
 
-Boosting should be nerfed, it's too good. The way it works is that, normal elements get the superpower to do ajax calls (links, forms, etc.). And boosting is inherited, meaning if the parent element is boosted, all the children elements also gets boosted.
+The way boosting works is that, normal elements get the superpower to do ajax calls (links, forms, etc.). And it is inherited, meaning if the parent element is boosted, all the children elements also gets boosted.
 
 To take advantage of this behaviour, copy the base layout from theme to root:
 
@@ -345,5 +345,184 @@ And turning a `Hugo-generated static site` into a `SPA-like experience` is as si
   <div
     hx-boost="true"
     hx-swap="morph:innerHTML"
+```
+<!-- prettier-ignore-end -->
+
+But we're still not done. We still need to reinitialize components on HTMX swap. First, copy `main.ts` from theme:
+
+```bash
+assets
+ |- ts
+     |- main.ts
+```
+
+then initiliaze the Stack component after HTMX swap:
+
+<!-- prettier-ignore-start -->
+```ts
+window.addEventListener('htmx:afterSwap', () => {
+    setTimeout(() => {
+        console.clear();
+        window.scrollTo(0, 0);
+        Stack.init();
+        window.Stack = Stack;
+        window.createElement = createElement;
+    }, 0);
+});
+```
+<!-- prettier-ignore-end -->
+
+There's also the issue with the code block copy button, where it keeps adding more buttons the more HTMX swap happens. So we also have to address that and remove previously initialized copy button:
+
+<!-- prettier-ignore-start -->
+```ts
+highlights.forEach((highlight) => {
+    highlight.querySelectorAll('button').forEach((button) => {
+        button.remove();
+    });
+});
+```
+<!-- prettier-ignore-end -->
+
+### Fixing The Search Widget
+
+An issue raised by boosting is that it expects other js scripts to be already loaded when needed. The previous implementation, did not need to load the js required for the search widget to work on load, not unless you go to the search page itself.
+
+To fix this, copy the search widget in theme:
+
+```bash
+layouts
+ |- partials
+     |- widget
+         |- search.html
+```
+
+then copy the loading of scripts from the search page in theme to the search widget in root:
+
+<!-- prettier-ignore-start -->
+```html
+<script>
+  window.searchResultTitleTemplate = "{{ T `search.resultTitle` }}"
+</script> {{- $opts := dict "minify" hugo.IsProduction "JSXFactory" "createElement" -}}
+{{- $searchScript := resources.Get "ts/search.tsx" | js.Build $opts -}}
+<script
+  type="text/javascript"
+  src="{{ $searchScript.RelPermalink }}"
+  defer
+></script>
+```
+<!-- prettier-ignore-end -->
+
+We also need to reinitalize the search component on HTMX swap. Copy the `search.tsx` from theme:
+
+```bash
+assets
+ |- ts
+     |- search.tsx
+```
+
+You don't have to do this, but I encapsulated the search component initialization, the same way as `main.ts`:
+
+<!-- prettier-ignore-start -->
+```ts
+let StackSearch = {
+    init: () => {
+        const searchForm = document.querySelector(
+                '.search-form'
+            ) as HTMLFormElement,
+            searchInput = searchForm.querySelector('input') as HTMLInputElement,
+            searchResultList = document.querySelector(
+                '.search-result--list'
+            ) as HTMLDivElement,
+            searchResultTitle = document.querySelector(
+                '.search-result--title'
+            ) as HTMLHeadingElement;
+
+        new Search({
+            form: searchForm,
+            input: searchInput,
+            list: searchResultList,
+            resultTitle: searchResultTitle,
+            resultTitleTemplate: window.searchResultTitleTemplate,
+        });
+    },
+};
+```
+<!-- prettier-ignore-end -->
+
+then used that to reiniatialize the search component:
+
+<!-- prettier-ignore-start -->
+```ts
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        StackSearch.init();
+    }, 0);
+});
+
+window.addEventListener('htmx:afterSwap', () => {
+    setTimeout(() => {
+        StackSearch.init();
+    }, 0);
+});
+```
+<!-- prettier-ignore-end -->
+
+By this point, if you go to the console tab, there will be a lot of errors. The search component expects that you're already using the search feature -- even though, what we want to do is to load the script, that's it.
+
+To silence these errors, we just need to wrap a couple statements, to execute if the data they're expecting exists:
+
+```diff
+private async searchKeywords(keywords: string[]) {
+    const rawData = await this.getData();
+
++   if (rawData) { ... }
+
+...
+
+private async doSearch(keywords: string[]) {
+        const startTime = performance.now();
+
+        const results = await this.searchKeywords(keywords);
+        this.clear();
+
++       if (results) { ... }
+
+...
+
+public async getData() {
+        if (!this.data) {
+            /// Not fetched yet
+            const jsonURL = this.form.dataset.json;
+
++           if (jsonURL) { ... }
+```
+
+### Page Navigation & Transition
+
+Boosting reloads the whole page, which we don't really want, especially if we add transitions. We don't want to apply the transition to the whole page, just the parts that are changing.
+
+Thankfully, this is possible in HTMX via [hx-indicator](https://htmx.org/attributes/hx-indicator/) attribute. For example, the left sidebar doesn't really change but the main content and the right sidebar does change.
+
+When HTMX is doing its magic, it adds [classes depending on the operation its currently doing](https://htmx.org/docs/#request-operations). And we can take advantage of this and apply css transitions:
+
+<!-- prettier-ignore-start -->
+```scss
+.htmx-request #right,
+.htmx-request #main {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.htmx-swapping #right,
+.htmx-swapping #main {
+  opacity: 0;
+}
+
+.htmx-settling #right,
+.htmx-settling #main {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
 ```
 <!-- prettier-ignore-end -->
