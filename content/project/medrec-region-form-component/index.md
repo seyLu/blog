@@ -1,19 +1,15 @@
 ---
-title: "medrec: Regions form"
-description: "Notes on approach to regions form"
+title: "Medrec Region Form Component"
+description: "Trying out HTMX/Alpine.js on a form component"
 date: "2023-10-17"
 categories: ["Project"]
-tags: ["medrec", "django", "htmx", "alpine.js", "daisyui"]
+tags: ["medrec", "django", "htmx", "alpine.js", "daisyui", "tailwindcss"]
 image: Chiyo_Mihama_With_Python_Homework.png
 ---
 
-## TLDR
+You can view the source code in [medrec](https://github.com/seyLu/medrec) repo. Final changes were made using [Approach 2](#approach-2) and the code changes are on [this PR](https://github.com/seyLu/medrec/pull/17/files).
 
-You can view the source code in [medrec](https://github.com/seyLu/medrec) repo.
-
-The final changes were made using [Approach 3](#approach-3) and the code changes are on [this PR](https://github.com/seyLu/medrec/pull/17/files).
-
-## Django stuff
+## Django
 
 ### API
 
@@ -62,44 +58,44 @@ class DistrictsQueryView(View):
 
 Sample district json response:
 
+<!-- prettier-ignore-start -->
 ```json
 {
-    "code": "082601001", // district code
-    "name": "Aguinaldo",
-    "region": "080000000", // this and below are foreign keys
-    "province": "082600000",
-    "city": " 082601000"
+  "code": "082601001", // district code
+  "name": "Aguinaldo",
+  "region": "080000000", // this and below are foreign keys
+  "province": "082600000",
+  "city": " 082601000"
 }
 ```
+<!-- prettier-ignore-end -->
 
-## Approach 1: HTMX & Datalist
-
-Was not able to document the code. The changes happened on the same PR as approach 2, and I tend to sqaush my commits so yeah. The gist of it is that I used HTMX and datalist first. Then ran into some issues, one of it is saving state, and another one is how datalist works -- value is the text that is shown on the client, but that doesn't necessarily mean that that is what we want to send to the server.
-
-## Approach 2: Alpine.js & Dropdown + filter
+## Approach 1: Alpine.js & Dropdown + Filter
 
 Then I tried alpine.js which was great at saving state, and instead of using datalist, used dropdown menu with a alpine template of unordered lists and a search filter.
 
 I first worked on province form and handling which cities to query:
 
-### Alpine.js saving state
+### Alpine.js Saving State
 
+<!-- prettier-ignore-start -->
 ```html
-<div ...
-     x-data="{
-        provinces: [],
+<div
+  x-data="{
+    provinces: [],
 
-        provinceName: null,
-        provinceCode: null,
-        cityName: null,
-        cityCode: null,
-        ...
+    provinceName: null,
+    provinceCode: null,
+    cityName: null,
+    cityCode: null,
 ```
+<!-- prettier-ignore-end -->
 
-### Initializing provinces using Alpine.js
+### Initializing Provinces
 
 Using Alpine.js, fetch provinces from server:
 
+<!-- prettier-ignore-start -->
 ```js
 async getProvinces() {
     this.provinces = await (await fetch({% url 'provinces-query' %}, {
@@ -111,68 +107,80 @@ async getProvinces() {
     })).json()
 },
 ```
+<!-- prettier-ignore-end -->
 
 We need to somehow call the getProvinces when we need the data:
 
 ```html
-<div x-init="getProvinces" ...></div>
+<div x-init="getProvinces"></div>
 ```
 
 From the json response received, dynamically create html content, again, using Alpine.js:
 
+<!-- prettier-ignore-start -->
 ```html
-<ul ...>
-    <template x-for="item in provinces">
-        <li>
-            <a x-text="item.name"></a>
-        </li>
-    </template>
+<ul>
+  <template x-for="item in provinces">
+    <li>
+        <a x-text="item.name"></a>
+    </li>
+  </template>
 </ul>
 ```
+<!-- prettier-ignore-end -->
 
-### Adding search filter on user input
+### Search Filter On User Input
 
+<!-- prettier-ignore-start -->
 ```html
 <div
-    x-data="{
-        search: '',
+  x-data="{
+    search: '',
 
-        get filteredProvinces() {
-            return provinces.filter(
-                province => province.name.toLowerCase().startsWith(this.search.toLowerCase())
-            )
-        },
-     }"
-    ...
+    get filteredProvinces() {
+      return provinces.filter((province) => {
+          province.name
+            .toLowerCase()
+            .startsWith(this.search.toLowerCase())
+      })
+    },
+  }"
 >
-    <input x-model="search" id="province_name" name="province_name" ... />
-    <ul ...>
-        <template x-for="item in filteredProvinces" :key="item.name">
-            <li>
-                <a x-text="item.name"></a>
-            </li>
-        </template>
-    </ul>
+  <input x-model="search" id="province_name" name="province_name" />
+  <ul>
+    <template x-for="item in filteredProvinces" :key="item.name">
+      <li>
+        <a x-text="item.name"></a>
+      </li>
+    </template>
+  </ul>
 </div>
 ```
+<!-- prettier-ignore-end -->
 
-### Fetching cities
+### Fetching Cities
 
 To fetch cities, added onclick handler on list item and added debounce to minimize calls to server:
 
+<!-- prettier-ignore-start -->
 ```html
 <template x-for="item in filteredProvinces" :key="item.name">
-    <li @click="
-        provinceName = item.name;
-        provinceCode = item.code;
-        @click.debounce="getCities">
-        <a x-text="item.name"></a>
-    </li>
+  <li
+    @click.debounce="getCities"
+    @click="
+      provinceName = item.name;
+      provinceCode = item.code;
+    "
+  >
+    <a x-text="item.name"></a>
+  </li>
 </template>
 ```
+<!-- prettier-ignore-end -->
 
 Then added `getCities` logic:
 
+<!-- prettier-ignore-start -->
 ```js
 async getCities() {
     this.cities = await (await fetch(`{% url 'cities-query' %}?province=${this.provinceCode}`, {
@@ -184,20 +192,21 @@ async getCities() {
     })).json()
 },
 ```
+<!-- prettier-ignore-end -->
 
 ### Demo
 
 And the output is something like this:
 
-{{< video src="/project/medrec-regions-form/create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
+{{< video src="/project/medrec-region-form-component/create_regions_form_using_alpinejs_and_dropdown_search.mp4" controls="yes" >}}
 
 If you're curious about all the changes made using this approach, you can [view this PR](https://github.com/seyLu/medrec/pull/11/files).
 
-<div id="approach-3"></div>
+<div id="approach-2"></div>
 
-## Approach 3: HTMX & Datalist
+## Approach 2: HTMX & Datalist
 
-### Update Django backend to handle HTMX
+### Handling HTMX On The Backend
 
 Check if request comes from htmx or not and respond to client accordingly (htmx expects html):
 
@@ -234,58 +243,63 @@ class ProvincesQueryView(View):
 
 And added templates to send to client:
 
+<!-- prettier-ignore-start -->
 ```html
 {% for province in provinces %}
-<option value="{{ province.name }}" data-code="{{ province.code }}">
+  <option value="{{ province.name }}" data-code="{{ province.code }}">
     {{ province.code }}
-</option>
+  </option>
 {% endfor %}
 ```
+<!-- prettier-ignore-end -->
 
-### HTMX stuff
+### HTMX Swap
 
 On datalist element load, request provinces from server and swap the template inside the datalist element:
 
+<!-- prettier-ignore-start -->
 ```html
 <input
-    type="text"
-    id="province_name"
-    name="province_name"
-    list="province_datalist"
-    required
-    placeholder="Leyte"
-    class="input input-bordered w-full"
+  type="text"
+  id="province_name"
+  name="province_name"
+  list="province_datalist"
+  required
+  placeholder="Leyte"
+  class="input input-bordered w-full"
 />
 <datalist
-    hx-post="{% url 'provinces-query' %}"
-    hx-trigger="load"
-    hx-target="this"
-    hx-swap="innerHTML"
-    id="province_datalist"
+  hx-post="{% url 'provinces-query' %}"
+  hx-trigger="load"
+  hx-target="this"
+  hx-swap="innerHTML"
+  id="province_datalist"
 ></datalist>
 ```
+<!-- prettier-ignore-end -->
 
-### Datalist option onclick handler
+### Handling Datalist Option On Click
 
 The idea was, once a province option was clicked, it would trigger a request to the server for cities under it. The problem was, datalists don't really support most javascript events that normal html elements do, including onclick.
 
 One way to circumvent this is to add an oninput change handler, then detect if it was a mouse click.
 
+<!-- prettier-ignore-start -->
 ```js
-const provinceName = document.getElementById("province_name");
-const cityName = document.getElementById("city_name");
-const districtName = document.getElementById("district_name");
+const provinceName = document.getElementById('province_name');
+const cityName = document.getElementById('city_name');
+const districtName = document.getElementById('district_name');
 
-const province = document.getElementById("province");
-const provinceDatalist = document.getElementById("province_datalist");
+const province = document.getElementById('province');
+const provinceDatalist = document.getElementById('province_datalist');
 let provinceNameEsrc = null;
 
-provinceName.addEventListener("keydown", (e) => {
-    provinceNameEsrc = e.key ? "input" : "list";
+provinceName.addEventListener('keydown', (e) => {
+    provinceNameEsrc = e.key ? 'input' : 'list';
 });
 
-provinceName.addEventListener("input", (e) => {
-    if (provinceNameEsrc === "list") {
+provinceName.addEventListener('input', (e) => {
+    if (provinceNameEsrc === 'list') {
         const val = e.target.value;
         const province_code = provinceDatalist.querySelector(
             `option[value="${val}"]`
@@ -293,40 +307,43 @@ provinceName.addEventListener("input", (e) => {
 
         province.value = province_code;
         province.setAttribute(
-            "hx-post",
+            'hx-post',
             `{% url 'cities-query' %}?province=${province_code}`
         );
         htmx.process(province);
 
-        province.dispatchEvent(new Event("change"));
+        province.dispatchEvent(new Event('change'));
         cityName.disabled = false;
-        cityName.value = "";
+        cityName.value = '';
     } else {
         cityName.disabled = true;
-        cityName.value = "";
+        cityName.value = '';
         districtName.disabled = true;
-        districtName.value = "";
+        districtName.value = '';
     }
 });
 ```
+<!-- prettier-ignore-end -->
 
 I've used `htmx.process(<elem>)` after adding htmx attributes, so that once this elem is swapped, htmx would work as usual.
 
 As for the custom `change` event, I used a hidden input elem to catch that event. This input elem stores `province_code`, and if the `province_code` changes, will trigger a request to the server to give back the cities under this province.
 
+<!-- prettier-ignore-start -->
 ```html
 <input
-    type="hidden"
-    id="province"
-    name="province"
-    hx-trigger="change"
-    hx-target="#city_datalist"
-    hx-swap="innerHTML"
+  type="hidden"
+  id="province"
+  name="province"
+  hx-trigger="change"
+  hx-target="#city_datalist"
+  hx-swap="innerHTML"
 />
 ```
+<!-- prettier-ignore-end -->
 
 ### Demo
 
-{{< video src="/project/medrec-regions-form/create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
+{{< video src="/project/medrec-region-form-component/create_regions_form_using_htmx_and_datalist.mp4" controls="yes" >}}
 
 You can [view this PR](https://github.com/seyLu/medrec/pull/17/files) to see the full changes made using this approach.
