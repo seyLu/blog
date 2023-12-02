@@ -620,4 +620,80 @@ layouts
 
 And for elements where it doesn't make sense to be boosted, like the dark mode toggle element, we just add an `hx-disable` attribute.
 
+### Topping It Off With A Progress Bar
+
+This is a classic for a SPA-like experience. We don't need to overcomplicate things, just something simple and that works.
+
+First, add the progress bar element:
+
+<!-- prettier-ignore-start -->
+```bash
+layouts
+ |- _default
+     |- baseof.html
+```
+<!-- prettier-ignore-end -->
+
+<br>
+
+<!-- prettier-ignore-start -->
+```html
+<body hx-ext="morph">
+  <div id="progress-bar"></div>
+```
+<!-- prettier-ignore-end -->
+
+Add some styles:
+
+```bash
+assets
+ |- scss
+     |- custom.scss
+```
+
+<br>
+
+<!-- prettier-ignore-start -->
+```scss
+#progress-bar {
+  background-color: #3498db;
+  width: 0;
+  height: 0.25rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transition: width 0.3s ease-out;
+}
+```
+<!-- prettier-ignore-end -->
+
+And some scripts to expand or increase the width of the progress bar:
+
+```bash
+assets
+ |- ts
+     |- main.ts
+```
+
+<br>
+
+<!-- prettier-ignore-start -->
+```ts
+document.body.addEventListener('htmx:configRequest', function (event) {
+    // Show the progress bar before the request is made
+    document.getElementById('progress-bar').style.width = '0%';
+});
+
+document.body.addEventListener('htmx:afterSwap', function (event) {
+    // Hide the progress bar after the request is complete
+    document.getElementById('progress-bar').style.width = '100%';
+
+    setTimeout(function () {
+        document.getElementById('progress-bar').style.opacity = '0';
+    }, 300);
+});
+```
+<!-- prettier-ignore-end -->
+
 Hmmm. I think that's about it. I mean, if I forgot something, feel free to [raise an issue](https://github.com/seyLu/blog/issues), [start a discussion](https://github.com/seyLu/blog/discussions), or comment down below. GTG I need to sleep.
