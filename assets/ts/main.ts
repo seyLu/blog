@@ -125,6 +125,20 @@ window.addEventListener('htmx:afterSwap', () => {
     }, 0);
 });
 
+document.body.addEventListener('htmx:configRequest', function (event) {
+    // Show the progress bar before the request is made
+    document.getElementById('progress-bar').style.width = '0%';
+});
+
+document.body.addEventListener('htmx:afterSwap', function (event) {
+    // Hide the progress bar after the request is complete
+    document.getElementById('progress-bar').style.width = '100%';
+
+    setTimeout(function () {
+        document.getElementById('progress-bar').style.opacity = '0';
+    }, 300);
+});
+
 declare global {
     interface Window {
         createElement: any;

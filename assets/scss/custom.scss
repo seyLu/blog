@@ -186,3 +186,14 @@
   opacity: 1;
   transition: opacity 200ms ease-in;
 }
+
+#progress-bar {
+  background-color: #3498db;
+  width: 0;
+  height: 0.25rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  transition: width 0.3s ease-out;
+}
