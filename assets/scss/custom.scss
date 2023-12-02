@@ -104,6 +104,7 @@
       native-opacity(var(--image-opacity));
   }
 
+  .section-card,
   .widget-archive--list,
   .search-form,
   .tagCloud-tags a,
@@ -164,10 +165,12 @@
   }
 }
 
-.article-content .copyCodeButton {
-  top: calc(var(--card-padding) / 1.17);
-  right: calc(var(--card-padding) / 1.17);
-  box-shadow: none;
+[data-scheme='dark'] {
+  .article-content .copyCodeButton {
+    top: calc(var(--card-padding) / 1.17);
+    right: calc(var(--card-padding) / 1.17);
+    box-shadow: none;
+  }
 }
 
 .htmx-request #right,
