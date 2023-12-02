@@ -620,7 +620,7 @@ layouts
 
 And for elements where it doesn't make sense to be boosted, like the dark mode toggle element, we just add an `hx-disable` attribute.
 
-### Topping It Off With A Progress Bar
+### Obligatory Progress Bar
 
 This is a classic for a SPA-like experience. We don't need to overcomplicate things, just something simple and that works.
 
