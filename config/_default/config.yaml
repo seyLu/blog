@@ -49,7 +49,6 @@ markup:
     noClasses: false
     codeFences: true
     guessSyntax: true
-    lineNoStart: 1
-    lineNos: true
+    lineNos: false
     lineNumbersInTable: true
     tabWidth: 4
