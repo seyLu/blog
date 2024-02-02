@@ -208,8 +208,7 @@ $gutter-horizontal: 6rem;
 
     .col-3-of-4 {
         width: calc(
-            2 * #{$gutter-horizontal} + 3 *
-                ((100% - #{$gutter-horizontal} * 3) / 4)
+            2 * #{$gutter-horizontal} + 3 * ((100% - #{$gutter-horizontal} * 3) / 4)
         );
     }
 }

@@ -28,9 +28,7 @@ const tagsToReplace = {
 
 let StackSearch = {
     init: () => {
-        const searchForm = document.querySelector(
-                '.search-form'
-            ) as HTMLFormElement,
+        const searchForm = document.querySelector('.search-form') as HTMLFormElement,
             searchInput = searchForm.querySelector('input') as HTMLInputElement,
             searchResultList = document.querySelector(
                 '.search-result--list'
@@ -120,16 +118,12 @@ class Search {
                     )} [...] `
                 );
                 resultArray.push(
-                    `${replaceHTMLEnt(
-                        str.substring(item.start - offset, item.start)
-                    )}`
+                    `${replaceHTMLEnt(str.substring(item.start - offset, item.start))}`
                 );
                 charCount += offset * 2;
             } else {
                 /// If the match is too close to the end of last match, don't add ellipsis
-                resultArray.push(
-                    replaceHTMLEnt(str.substring(lastIndex, item.start))
-                );
+                resultArray.push(replaceHTMLEnt(str.substring(lastIndex, item.start)));
                 charCount += item.start - lastIndex;
             }
 
@@ -159,9 +153,7 @@ class Search {
             let end = str.length;
             if (ellipsis) end = Math.min(end, lastIndex + offset);
 
-            resultArray.push(
-                `${replaceHTMLEnt(str.substring(lastIndex, end))}`
-            );
+            resultArray.push(`${replaceHTMLEnt(str.substring(lastIndex, end))}`);
 
             if (ellipsis && end != str.length) {
                 resultArray.push(` [...]`);
@@ -226,9 +218,7 @@ class Search {
                     );
                 } else {
                     /// If there are no matches in the content, use the first 140 characters as preview
-                    result.preview = replaceHTMLEnt(
-                        result.content.substring(0, 140)
-                    );
+                    result.preview = replaceHTMLEnt(result.content.substring(0, 140));
                 }
 
                 result.matchCount = titleMatches.length + contentMatches.length;
